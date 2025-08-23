@@ -1,5 +1,7 @@
-package com.example.demo.student;
+package com.example.demo.service;
 
+import com.example.demo.entity.Student;
+import com.example.demo.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
