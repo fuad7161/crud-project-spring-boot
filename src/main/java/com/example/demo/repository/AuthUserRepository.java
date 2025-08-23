@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AuthUserRepository extends JpaRepository<AuthUser, Long> {
     boolean existsByEmail(String email);
+    void deleteAuthUserByEmail(String email);
 }

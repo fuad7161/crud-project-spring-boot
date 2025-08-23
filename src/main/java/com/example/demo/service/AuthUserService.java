@@ -2,7 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.dto.AuthUserDto;
 import com.example.demo.entity.AuthUser;
+import com.example.demo.exception.UserAlreadyExistException;
+import com.example.demo.exception.UserDoseNotExistException;
 import com.example.demo.repository.AuthUserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,14 +21,23 @@ public class AuthUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AuthUser registerUser(AuthUserDto dto) {
+    public void registerUser(AuthUserDto dto) {
         if (authUserRepository.existsByEmail(dto.getEmail())) {
-            throw new RuntimeException("Email Already Exists");
+            throw new UserAlreadyExistException("Email Already Exists");
         }
 
         AuthUser authUser = new AuthUser();
         authUser.setEmail(dto.getEmail());
         authUser.setPassword(passwordEncoder.encode(dto.getPassword()));
-        return authUserRepository.save(authUser);
+        authUserRepository.save(authUser);
+    }
+
+    @Transactional
+    public void removeUser(String email) {
+        if (authUserRepository.existsByEmail(email)) {
+            authUserRepository.deleteAuthUserByEmail(email);
+        }else{
+            throw new UserDoseNotExistException("User dose Not Exists");
+        }
     }
 }
