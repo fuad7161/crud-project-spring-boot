@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/v1/auth")
 public class AuthController {
@@ -16,6 +18,12 @@ public class AuthController {
     private final AuthUserService authUserService;
     public AuthController(AuthUserService authUserService) {
         this.authUserService = authUserService;
+    }
+
+    @GetMapping(value = "/allUser")
+    public ResponseEntity<List<AuthUserDto>> getAllUser() {
+        List<AuthUserDto> userList = authUserService.getAllUsers();
+        return ResponseEntity.ok(userList);
     }
 
     @PostMapping(value = "/registration")

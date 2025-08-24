@@ -1,12 +1,14 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
-@Table
+@Table(name = "student")
+@Data
 public class Student {
     @Id
     @SequenceGenerator(

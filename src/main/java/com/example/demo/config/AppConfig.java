@@ -16,8 +16,7 @@ public class AppConfig {
                 .csrf(csrf -> csrf.disable()) // disable CSRF for REST APIs
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/v1/auth/**",
-                                "/api/v1/student").permitAll() // allow public access
+                                "/api/v1/**").permitAll() // allow public access
                         .anyRequest().authenticated() // everything else needs auth
                 )
                 .httpBasic(httpBasic -> {}); // ✅ new syntax

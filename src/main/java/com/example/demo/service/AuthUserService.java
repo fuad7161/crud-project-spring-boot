@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AuthUserService {
     @Autowired
@@ -19,6 +22,16 @@ public class AuthUserService {
     public AuthUserService(AuthUserRepository authUserRepository, PasswordEncoder passwordEncoder) {
         this.authUserRepository = authUserRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+
+    public List<AuthUserDto> getAllUsers() {
+//        return authUserRepository.getAuthUsers();
+
+        return authUserRepository.findAll()
+                .stream()
+                .map(AuthUserDto::new)
+                .collect(Collectors.toList());
     }
 
     public void registerUser(AuthUserDto dto) {
